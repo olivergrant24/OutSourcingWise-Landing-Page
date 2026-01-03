@@ -85,6 +85,7 @@ export function Hero() {
         </div>
 
         {/* Trust Badges */}
+          {/*
         <div className="mt-20 pt-12 border-t border-gray-200">
           <p className="text-sm font-semibold text-gray-500 mb-8 text-center tracking-wider">
             TRUSTED BY FAST-GROWING COMPANIES
@@ -96,6 +97,7 @@ export function Hero() {
               </span>)}
           </div>
         </div>
+         */}
       </Container>
     </section>;
 }
