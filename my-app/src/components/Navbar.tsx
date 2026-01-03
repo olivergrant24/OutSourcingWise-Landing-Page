@@ -40,12 +40,19 @@ export function Navbar() {
       <Container>
         <nav className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex-shrink-0 cursor-pointer" onClick={() => scrollToSection('#hero')}>
+          <div
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => scrollToSection('#hero')}
+          >
+            <img
+              src="/outsourcewise.png"
+              alt="OutSourceWise Logo"
+              className="h-8 w-auto"
+            />
             <span className="text-2xl font-bold text-gray-900 tracking-tight">
               OutSource<span className="text-blue-600">Wise</span>
             </span>
           </div>
-
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center space-x-8">
             {navLinks.map(link => <button key={link.name} onClick={() => handleNavClick(link.href)} className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">
