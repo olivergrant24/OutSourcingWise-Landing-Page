@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Section } from './ui/Section';
 import { Container } from './ui/Container';
 import { Plus, Minus } from 'lucide-react';

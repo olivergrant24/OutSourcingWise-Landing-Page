@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container } from './ui/Container';
 import { Button } from './ui/Button';
 import { ArrowRight, CheckCircle2, Play } from 'lucide-react';

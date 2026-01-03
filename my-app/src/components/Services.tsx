@@ -1,4 +1,3 @@
-import React from 'react';
 import { Section } from './ui/Section';
 import { Container } from './ui/Container';
 import { Calendar, Phone, Share2, Headphones, Wrench, Users, ArrowRight } from 'lucide-react';

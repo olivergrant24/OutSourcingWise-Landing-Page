@@ -1,7 +1,6 @@
-import React from 'react';
 import { Section } from './ui/Section';
 import { Container } from './ui/Container';
-import { CheckCircle2, Award, Clock, Shield, Users, Zap, TrendingUp } from 'lucide-react';
+import { Award, Clock, Shield, Users, Zap, TrendingUp } from 'lucide-react';
 const benefits = [{
   icon: Award,
   title: 'Top 1% Trained VAs',

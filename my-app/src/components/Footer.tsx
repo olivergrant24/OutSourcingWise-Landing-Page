@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container } from './ui/Container';
 import { scrollToSection } from '../lib/utils';
 import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
