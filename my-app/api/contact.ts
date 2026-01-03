@@ -10,13 +10,19 @@ export default async function handler(
   }
 
   try {
-    const { name, email, company, service, message } = req.body as {
+    const { name, email, company, service, message, website } = req.body as {
       name?: string;
       email?: string;
       company?: string;
       service?: string;
       message?: string;
+      website?: string;
     };
+
+    if (website && website.trim().length > 0) {
+      // Silent success — bot thinks it worked
+      return res.status(200).json({ ok: true });
+    }
 
     if (!name || !email) {
       return res.status(400).json({
