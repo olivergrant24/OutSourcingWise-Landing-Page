@@ -45,14 +45,14 @@ export default async function handler(
       replyTo: email,
       subject: `New Consultation — ${name}`,
       text: `
-Name: ${name}
-Email: ${email}
-Company: ${company || "-"}
-Service: ${service || "-"}
+            Name: ${name}
+            Email: ${email}
+            Company: ${company || "-"}
+            Service: ${service || "-"}
 
-Message:
-${message || "-"}
-      `.trim(),
+            Message:
+            ${message || "-"}
+                  `.trim(),
     });
 
     return res.status(200).json({ ok: true });

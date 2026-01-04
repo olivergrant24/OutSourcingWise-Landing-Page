@@ -66,19 +66,19 @@ export function Contact() {
                 <div className="h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mr-4">
                   <Mail className="h-5 w-5" />
                 </div>
-                <span className="text-gray-700">hello@outsourcewise.com</span>
+                <span className="text-gray-700">francisoutsourcewise@gmail.com</span>
               </div>
               <div className="flex items-center">
                 <div className="h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mr-4">
                   <Phone className="h-5 w-5" />
                 </div>
-                <span className="text-gray-700">+1 (555) 123-4567</span>
+                <span className="text-gray-700">+639668961579</span>
               </div>
               <div className="flex items-center">
                 <div className="h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mr-4">
                   <MapPin className="h-5 w-5" />
                 </div>
-                <span className="text-gray-700">San Francisco, CA</span>
+                <span className="text-gray-700">Philippines</span>
               </div>
             </div>
 
