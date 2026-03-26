@@ -56,7 +56,7 @@ export function Hero() {
           <div className="relative lg:h-[600px] h-[400px]">
             {/* Main Image */}
             <div className="absolute inset-0 rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
-              <img src="hero-image.jpg" alt="Professional team collaborating" className="w-full h-full object-cover" />
+              <img src="hero-image.jpg" alt="Professional team collaborating" className="w-full h-full object-contain" />
               <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent"></div>
             </div>
 
