@@ -8,6 +8,7 @@ import {
   getTokenHash,
   logoAttachments,
   parseVerificationToken,
+  senderAddress,
   sendLeadEmail,
 } from "./contact-utils.js";
 
@@ -142,7 +143,7 @@ export default async function handler(
 
     const transporter = createTransporter();
     await transporter.sendMail({
-      from: `"OutSourceWise Website" <${process.env.GMAIL_USER}>`,
+      from: `"OutSourceWise Website" <${senderAddress()}>`,
       to: lead.email,
       subject: "Your OutSourceWise request is confirmed",
       html: confirmationEmailHtml(lead),

@@ -4,6 +4,7 @@ import {
   createVerificationToken,
   getBaseUrl,
   logoAttachments,
+  senderAddress,
   verificationEmailHtml,
   type Lead,
 } from "./contact-utils.js";
@@ -165,7 +166,7 @@ export default async function handler(
     const transporter = createTransporter();
 
     await transporter.sendMail({
-      from: `"OutSourceWise Website" <${process.env.GMAIL_USER}>`,
+      from: `"OutSourceWise Website" <${senderAddress()}>`,
       to: lead.email,
       subject: "Confirm your OutSourceWise consultation request",
       html: verificationEmailHtml(lead, verificationUrl),
@@ -184,9 +185,17 @@ export default async function handler(
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error("Email error:", message);
+    const authFailed =
+      message.includes("Invalid login") ||
+      message.includes("Username and Password not accepted") ||
+      message.includes("Missing credentials") ||
+      message.includes("Gmail credentials are missing");
+
     return res.status(500).json({
       ok: false,
-      error: "Failed to send verification email",
+      error: authFailed
+        ? "Gmail authentication failed. Check GMAIL_USER and GMAIL_APP_PASSWORD in Vercel."
+        : "Failed to send verification email",
     });
   }
 }

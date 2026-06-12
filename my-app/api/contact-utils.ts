@@ -31,13 +31,29 @@ export function getBaseUrl(req: { headers: Record<string, string | string[] | un
 }
 
 export function createTransporter() {
+  const user = process.env.GMAIL_USER?.trim();
+  const pass = process.env.GMAIL_APP_PASSWORD?.replace(/\s/g, "");
+
+  if (!user || !pass) {
+    throw new Error("Gmail credentials are missing");
+  }
+
   return nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.GMAIL_USER!,
-      pass: process.env.GMAIL_APP_PASSWORD!,
+      user,
+      pass,
     },
   });
+}
+
+export function senderAddress() {
+  const user = process.env.GMAIL_USER?.trim();
+  if (!user) {
+    throw new Error("GMAIL_USER is missing");
+  }
+
+  return user;
 }
 
 function escapeHtml(value: string) {
@@ -238,8 +254,8 @@ export async function sendLeadEmail(lead: Lead) {
   const transporter = createTransporter();
 
   await transporter.sendMail({
-    from: `"OutSourceWise Website" <${process.env.GMAIL_USER}>`,
-    to: process.env.TO_EMAIL || process.env.GMAIL_USER,
+    from: `"OutSourceWise Website" <${senderAddress()}>`,
+    to: process.env.TO_EMAIL || senderAddress(),
     replyTo: lead.email,
     subject: `Verified Consultation - ${lead.name}`,
     html: leadEmailHtml(lead),
