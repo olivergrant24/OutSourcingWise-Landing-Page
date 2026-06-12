@@ -22,7 +22,7 @@ declare global {
           theme?: 'light' | 'dark' | 'auto';
           callback?: (token: string) => void;
           'expired-callback'?: () => void;
-          'error-callback'?: () => void;
+          'error-callback'?: (errorCode?: string) => boolean | void;
         }
       ) => string;
       remove: (widgetId: string) => void;
@@ -80,9 +80,16 @@ export function Contact() {
             turnstileTokenRef.current = '';
             setTurnstileToken('');
           },
-          'error-callback': () => {
+          'error-callback': (errorCode?: string) => {
             turnstileTokenRef.current = '';
             setTurnstileToken('');
+            setFormState('error');
+            setErrorMsg(
+              errorCode?.startsWith('110200')
+                ? 'Security check is not enabled for this website domain yet.'
+                : 'Security check failed. Please refresh and try again.'
+            );
+            return true;
           },
         });
       }

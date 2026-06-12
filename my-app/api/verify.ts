@@ -9,7 +9,7 @@ import {
   logoAttachment,
   parseVerificationToken,
   sendLeadEmail,
-} from "./contact-utils";
+} from "./contact-utils.js";
 
 const verifiedTokens = new Map<string, number>();
 const TOKEN_REPLAY_WINDOW_MS = 60 * 60 * 1000;

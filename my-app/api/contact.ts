@@ -6,7 +6,7 @@ import {
   logoAttachment,
   verificationEmailHtml,
   type Lead,
-} from "./contact-utils";
+} from "./contact-utils.js";
 
 const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
 const RATE_LIMIT_MAX = 3;
