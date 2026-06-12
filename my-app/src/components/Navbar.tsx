@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import Menu from 'lucide-react/dist/esm/icons/menu.js';
+import X from 'lucide-react/dist/esm/icons/x.js';
 import { Container } from './ui/Container';
 import { Button } from './ui/Button';
 import { cn, scrollToSection } from '../lib/utils';
+import logoUrl from '../assets/outsourcewise.png';
 const navLinks = [{
   name: 'Pricing',
   href: '#pricing'
@@ -45,7 +47,7 @@ export function Navbar() {
             onClick={() => scrollToSection('#hero')}
           >
             <img
-              src="/outsourcewise.png"
+              src={logoUrl}
               alt="OutSourceWise Logo"
               className="h-8 w-auto"
             />

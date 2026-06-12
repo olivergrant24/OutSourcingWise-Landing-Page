@@ -1,7 +1,10 @@
 import { Section } from './ui/Section';
 import { Container } from './ui/Container';
 import { Button } from './ui/Button';
-import { Check, Zap, Star, Crown } from 'lucide-react';
+import Check from 'lucide-react/dist/esm/icons/check.js';
+import Zap from 'lucide-react/dist/esm/icons/zap.js';
+import Star from 'lucide-react/dist/esm/icons/star.js';
+import Crown from 'lucide-react/dist/esm/icons/crown.js';
 const pricingTiers = [{
   name: 'Starter',
   icon: Zap,

@@ -1,6 +1,9 @@
 import { Container } from './ui/Container';
 import { scrollToSection } from '../lib/utils';
-import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import Facebook from 'lucide-react/dist/esm/icons/facebook.js';
+import Twitter from 'lucide-react/dist/esm/icons/twitter.js';
+import Linkedin from 'lucide-react/dist/esm/icons/linkedin.js';
+import Instagram from 'lucide-react/dist/esm/icons/instagram.js';
 export function Footer() {
   const links = [{
     name: 'Services',

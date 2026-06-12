@@ -1,6 +1,11 @@
 import { Section } from './ui/Section';
 import { Container } from './ui/Container';
-import { Award, Clock, Shield, Users, Zap, TrendingUp } from 'lucide-react';
+import Award from 'lucide-react/dist/esm/icons/award.js';
+import Clock from 'lucide-react/dist/esm/icons/clock.js';
+import Shield from 'lucide-react/dist/esm/icons/shield.js';
+import Users from 'lucide-react/dist/esm/icons/users.js';
+import Zap from 'lucide-react/dist/esm/icons/zap.js';
+import TrendingUp from 'lucide-react/dist/esm/icons/trending-up.js';
 const benefits = [{
   icon: Award,
   title: 'Top 1% Trained VAs',
@@ -61,11 +66,19 @@ export function WhyUs() {
           </div>
 
           <div className="order-1 lg:order-2 relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
-              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80" alt="Team collaboration" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-blue-900/30 to-transparent"></div>
+            <div className="relative min-h-[420px] rounded-3xl overflow-hidden shadow-2xl border-8 border-white bg-gradient-to-br from-slate-950 via-blue-900 to-slate-900">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.45),transparent_30%),radial-gradient(circle_at_78%_34%,rgba(34,197,94,0.25),transparent_26%)]"></div>
+              <div className="absolute left-8 right-8 top-8 grid grid-cols-2 gap-4">
+                {benefits.slice(0, 4).map((benefit) => {
+                const Icon = benefit.icon;
+                return <div key={benefit.title} className="rounded-2xl bg-white/12 border border-white/15 p-4 backdrop-blur-sm">
+                    <Icon className="h-6 w-6 text-blue-200 mb-6" />
+                    <div className="h-2 w-16 rounded-full bg-white/40 mb-3"></div>
+                    <div className="h-2 w-24 rounded-full bg-white/20"></div>
+                  </div>;
+              })}
+              </div>
 
-              {/* Overlay Stats */}
               <div className="absolute bottom-8 left-8 right-8 bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>

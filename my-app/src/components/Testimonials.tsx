@@ -1,21 +1,22 @@
 import { Section } from './ui/Section';
 import { Container } from './ui/Container';
-import { Star, Quote } from 'lucide-react';
+import Star from 'lucide-react/dist/esm/icons/star.js';
+import Quote from 'lucide-react/dist/esm/icons/quote.js';
 const testimonials = [{
   quote: 'OutSourceWise completely transformed our lead gen process. We went from booking 5 calls a week to 25 within the first month. The quality of the VAs is unmatched.',
   author: 'Sarah Jenkins',
   role: 'VP of Sales, TechGrowth',
-  image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80'
+  initials: 'SJ'
 }, {
   quote: 'I was hesitant about outsourcing customer support, but their team integrated seamlessly. Our response times dropped by 80% and customer satisfaction is at an all-time high.',
   author: 'Michael Chen',
   role: 'Founder, EcomScale',
-  image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80'
+  initials: 'MC'
 }, {
   quote: "The flexibility is what keeps us here. We scaled up during our busy season and scaled back down without any headaches. It's the perfect partner for a growing agency.",
   author: 'Jessica Williams',
   role: 'Operations Director, CreativeFlow',
-  image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80'
+  initials: 'JW'
 }];
 export function Testimonials() {
   return <Section id="testimonials" className="bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 text-white relative overflow-hidden">
@@ -49,7 +50,9 @@ export function Testimonials() {
               </blockquote>
 
               <div className="flex items-center">
-                <img src={testimonial.image} alt={testimonial.author} className="h-14 w-14 rounded-full object-cover border-2 border-white/30 mr-4" />
+                <div className="h-14 w-14 rounded-full bg-white/15 border-2 border-white/30 mr-4 flex items-center justify-center text-sm font-bold text-white">
+                  {testimonial.initials}
+                </div>
                 <div>
                   <div className="font-bold text-white text-lg">
                     {testimonial.author}

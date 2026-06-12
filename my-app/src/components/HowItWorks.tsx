@@ -1,6 +1,8 @@
 import { Section } from './ui/Section';
 import { Container } from './ui/Container';
-import { PhoneCall, UserCheck, BarChart3 } from 'lucide-react';
+import PhoneCall from 'lucide-react/dist/esm/icons/phone-call.js';
+import UserCheck from 'lucide-react/dist/esm/icons/user-check.js';
+import BarChart3 from 'lucide-react/dist/esm/icons/bar-chart-3.js';
 const steps = [{
   icon: PhoneCall,
   title: 'Discovery Call',

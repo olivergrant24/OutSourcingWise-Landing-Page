@@ -1,12 +1,102 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Section } from './ui/Section';
 import { Container } from './ui/Container';
 import { Button } from './ui/Button';
-import { Mail, Phone, MapPin, CheckCircle } from 'lucide-react';
+import Mail from 'lucide-react/dist/esm/icons/mail.js';
+import Phone from 'lucide-react/dist/esm/icons/phone.js';
+import MapPin from 'lucide-react/dist/esm/icons/map-pin.js';
+import CheckCircle from 'lucide-react/dist/esm/icons/check-circle.js';
+
+const configuredTurnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined;
+const turnstileSiteKey = configuredTurnstileSiteKey?.startsWith('your-')
+  ? undefined
+  : configuredTurnstileSiteKey;
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (
+        container: HTMLElement,
+        options: {
+          sitekey: string;
+          theme?: 'light' | 'dark' | 'auto';
+          callback?: (token: string) => void;
+          'expired-callback'?: () => void;
+          'error-callback'?: () => void;
+        }
+      ) => string;
+      remove: (widgetId: string) => void;
+      reset: (widgetId: string) => void;
+    };
+  }
+}
 
 export function Contact() {
   const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState<string>('');
+  const [startedAt] = useState(() => Date.now());
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const turnstileTokenRef = useRef('');
+  const turnstileRef = useRef<HTMLDivElement | null>(null);
+  const turnstileWidgetIdRef = useRef<string | null>(null);
+
+  const clearTurnstile = () => {
+    turnstileTokenRef.current = '';
+    setTurnstileToken('');
+
+    if (turnstileWidgetIdRef.current) {
+      window.turnstile?.remove(turnstileWidgetIdRef.current);
+      turnstileWidgetIdRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    if (!turnstileSiteKey || !turnstileRef.current || formState === 'success') {
+      return;
+    }
+
+    let cancelled = false;
+    let timeoutId: number | undefined;
+
+    const renderTurnstile = () => {
+      if (cancelled || !turnstileRef.current) {
+        return;
+      }
+
+      if (!window.turnstile) {
+        timeoutId = window.setTimeout(renderTurnstile, 150);
+        return;
+      }
+
+      if (!turnstileWidgetIdRef.current) {
+        turnstileWidgetIdRef.current = window.turnstile.render(turnstileRef.current, {
+          sitekey: turnstileSiteKey,
+          theme: 'light',
+          callback: (token) => {
+            turnstileTokenRef.current = token;
+            setTurnstileToken(token);
+          },
+          'expired-callback': () => {
+            turnstileTokenRef.current = '';
+            setTurnstileToken('');
+          },
+          'error-callback': () => {
+            turnstileTokenRef.current = '';
+            setTurnstileToken('');
+          },
+        });
+      }
+    };
+
+    renderTurnstile();
+
+    return () => {
+      cancelled = true;
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  }, [formState]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -15,6 +105,16 @@ export function Contact() {
 
     const formEl = e.currentTarget;
     const fd = new FormData(formEl);
+    const verifiedTurnstileToken =
+      turnstileTokenRef.current ||
+      turnstileToken ||
+      String(fd.get('cf-turnstile-response') || '');
+
+    if (turnstileSiteKey && !verifiedTurnstileToken) {
+      setFormState('error');
+      setErrorMsg('Please complete the security check');
+      return;
+    }
 
     const payload = {
       name: String(fd.get('name') || ''),
@@ -23,6 +123,8 @@ export function Contact() {
       service: String(fd.get('service') || ''),
       message: String(fd.get('message') || ''),
       website: String(fd.get('website') || ''),
+      startedAt: String(fd.get('startedAt') || ''),
+      turnstileToken: verifiedTurnstileToken,
     };
 
     try {
@@ -39,11 +141,17 @@ export function Contact() {
       }
 
       setFormState('success');
-      formEl.reset(); // optional
+      formEl.reset();
+      clearTurnstile();
     } catch (err) {
       console.error(err);
       setFormState('error');
-      setErrorMsg('Failed to send. Please try again or email us directly.');
+      setErrorMsg(err instanceof Error ? err.message : 'Failed to send. Please try again or email us directly.');
+      turnstileTokenRef.current = '';
+      setTurnstileToken('');
+      if (turnstileWidgetIdRef.current) {
+        window.turnstile?.reset(turnstileWidgetIdRef.current);
+      }
     }
   };
 
@@ -109,16 +217,19 @@ export function Contact() {
                   <CheckCircle className="h-8 w-8" />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                  Message Sent!
+                  Confirm Your Email
                 </h3>
                 <p className="text-gray-600">
-                  Thank you for reaching out. One of our account managers will
-                  be in touch within 24 hours.
+                  We sent a verification link to your inbox. Your request will
+                  reach our team after you confirm your email.
                 </p>
                 <Button
                   variant="outline"
                   className="mt-8"
-                  onClick={() => setFormState('idle')}
+                  onClick={() => {
+                    clearTurnstile();
+                    setFormState('idle');
+                  }}
                 >
                   Send another message
                 </Button>
@@ -132,6 +243,7 @@ export function Contact() {
                     autoComplete="off"
                     className="hidden"
                   />
+                  <input type="hidden" name="startedAt" value={startedAt} />
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                     Full Name
@@ -208,6 +320,13 @@ export function Contact() {
 
                 {formState === 'error' && (
                   <p className="text-sm text-red-600">{errorMsg}</p>
+                )}
+
+                {turnstileSiteKey && (
+                  <div
+                    ref={turnstileRef}
+                    className="min-h-[65px]"
+                  />
                 )}
 
                 <Button type="submit" className="w-full" size="lg" disabled={formState === 'submitting'}>

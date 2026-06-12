@@ -1,6 +1,9 @@
 import { Container } from './ui/Container';
 import { Button } from './ui/Button';
-import { ArrowRight, CheckCircle2, Play } from 'lucide-react';
+import ArrowRight from 'lucide-react/dist/esm/icons/arrow-right.js';
+import CheckCircle2 from 'lucide-react/dist/esm/icons/check-circle-2.js';
+import Play from 'lucide-react/dist/esm/icons/play.js';
+import heroImageUrl from '../assets/hero-image.jpg';
 export function Hero() {
   return <section id="hero" className="relative pt-20 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <Container className="relative z-10">
@@ -52,11 +55,9 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Right Image */}
           <div className="relative lg:h-[600px] h-[400px]">
-            {/* Main Image */}
             <div className="absolute inset-0 rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
-              <img src="hero-image.jpg" alt="Professional team collaborating" className="w-full h-full object-contain" />
+              <img src={heroImageUrl} alt="Professional team collaborating" className="w-full h-full object-contain" fetchPriority="high" />
               <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent"></div>
             </div>
 

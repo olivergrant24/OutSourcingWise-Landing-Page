@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Section } from './ui/Section';
 import { Container } from './ui/Container';
-import { Plus, Minus } from 'lucide-react';
+import Plus from 'lucide-react/dist/esm/icons/plus.js';
+import Minus from 'lucide-react/dist/esm/icons/minus.js';
 import { cn } from '../lib/utils';
 const faqs = [{
   question: 'How fast can we start?',
