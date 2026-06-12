@@ -34,7 +34,6 @@ declare global {
 export function Contact() {
   const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState<string>('');
-  const [startedAt] = useState(() => Date.now());
   const [turnstileToken, setTurnstileToken] = useState('');
   const turnstileTokenRef = useRef('');
   const turnstileRef = useRef<HTMLDivElement | null>(null);
@@ -129,7 +128,6 @@ export function Contact() {
       company: String(fd.get('company') || ''),
       service: String(fd.get('service') || ''),
       message: String(fd.get('message') || ''),
-      startedAt: String(fd.get('startedAt') || ''),
       turnstileToken: verifiedTurnstileToken,
     };
 
@@ -242,7 +240,6 @@ export function Contact() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
-                  <input type="hidden" name="startedAt" value={startedAt} />
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                     Full Name

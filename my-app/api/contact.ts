@@ -10,7 +10,6 @@ import {
 
 const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
 const RATE_LIMIT_MAX = 3;
-const MIN_SUBMIT_TIME_MS = 3000;
 const MAX_MESSAGE_LENGTH = 2000;
 
 const disposableDomains = new Set([
@@ -94,7 +93,6 @@ export default async function handler(
       company,
       service,
       message,
-      startedAt,
       turnstileToken,
     } = req.body as {
       name?: string;
@@ -102,7 +100,6 @@ export default async function handler(
       company?: string;
       service?: string;
       message?: string;
-      startedAt?: string;
       turnstileToken?: string;
     };
 
@@ -110,15 +107,7 @@ export default async function handler(
     const trimmedName = name?.trim() || "";
     const trimmedEmail = email?.trim().toLowerCase() || "";
     const trimmedMessage = message?.trim() || "";
-    const submittedAt = Number(startedAt);
     const emailDomain = trimmedEmail.split("@")[1] || "";
-
-    if (Number.isFinite(submittedAt) && Date.now() - submittedAt < MIN_SUBMIT_TIME_MS) {
-      return res.status(400).json({
-        ok: false,
-        error: "Please wait a moment before submitting",
-      });
-    }
 
     if (!(await verifyTurnstile(turnstileToken || "", clientIp))) {
       return res.status(400).json({
