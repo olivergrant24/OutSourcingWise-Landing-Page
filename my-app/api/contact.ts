@@ -3,7 +3,7 @@ import {
   createTransporter,
   createVerificationToken,
   getBaseUrl,
-  logoAttachment,
+  logoAttachments,
   verificationEmailHtml,
   type Lead,
 } from "./contact-utils.js";
@@ -169,7 +169,7 @@ export default async function handler(
       to: lead.email,
       subject: "Confirm your OutSourceWise consultation request",
       html: verificationEmailHtml(lead, verificationUrl),
-      attachments: [logoAttachment()],
+      attachments: logoAttachments(),
       text: `
         Hi ${lead.name},
 
@@ -182,10 +182,11 @@ export default async function handler(
 
     return res.status(200).json({ ok: true, verificationRequired: true });
   } catch (err) {
-    console.error("Email error:", err);
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("Email error:", message);
     return res.status(500).json({
       ok: false,
-      error: "Failed to send email",
+      error: "Failed to send verification email",
     });
   }
 }

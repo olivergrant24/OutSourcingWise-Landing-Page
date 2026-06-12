@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import fs from "node:fs";
 import path from "node:path";
 import nodemailer from "nodemailer";
 
@@ -52,10 +53,12 @@ function emailShell({
   title,
   preview,
   body,
+  logoSrc,
 }: {
   title: string;
   preview: string;
   body: string;
+  logoSrc: string;
 }) {
   return `<!doctype html>
 <html lang="en">
@@ -75,7 +78,7 @@ function emailShell({
                 <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
                   <tr>
                     <td style="vertical-align:middle;">
-                      <img src="cid:outsourcewise-logo" alt="OutSourceWise" width="44" height="44" style="display:inline-block;vertical-align:middle;border-radius:10px;margin-right:12px;" />
+                      <img src="${logoSrc}" alt="OutSourceWise" width="44" height="44" style="display:inline-block;vertical-align:middle;border-radius:10px;margin-right:12px;" />
                       <span style="display:inline-block;vertical-align:middle;font-size:22px;font-weight:700;color:#111827;">OutSource<span style="color:#2563eb;">Wise</span></span>
                     </td>
                   </tr>
@@ -100,18 +103,35 @@ function emailShell({
 </html>`;
 }
 
-export function logoAttachment() {
-  return {
-    filename: "outsourcewise.png",
-    path: path.join(process.cwd(), "public", "outsourcewise.png"),
-    cid: "outsourcewise-logo",
-  };
+function publicLogoUrl() {
+  const siteUrl = process.env.SITE_URL?.replace(/\/$/, "");
+  if (siteUrl && !siteUrl.includes("localhost")) {
+    return `${siteUrl}/outsourcewise.png`;
+  }
+
+  return "cid:outsourcewise-logo";
+}
+
+export function logoAttachments() {
+  const logoPath = path.join(process.cwd(), "public", "outsourcewise.png");
+  if (!fs.existsSync(logoPath)) {
+    return [];
+  }
+
+  return [
+    {
+      filename: "outsourcewise.png",
+      path: logoPath,
+      cid: "outsourcewise-logo",
+    },
+  ];
 }
 
 export function verificationEmailHtml(lead: Lead, verificationUrl: string) {
   return emailShell({
     title: "Confirm your consultation request",
     preview: "Please confirm your email to send your consultation request to OutSourceWise.",
+    logoSrc: publicLogoUrl(),
     body: `
       <p style="margin:0 0 10px;color:#2563eb;font-size:14px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;">Email confirmation</p>
       <h1 style="margin:0 0 14px;font-size:28px;line-height:1.25;color:#111827;">Confirm your consultation request</h1>
@@ -127,6 +147,7 @@ export function confirmationEmailHtml(lead: Lead) {
   return emailShell({
     title: "Your request is confirmed",
     preview: "Your OutSourceWise consultation request has been confirmed.",
+    logoSrc: publicLogoUrl(),
     body: `
       <p style="margin:0 0 10px;color:#16a34a;font-size:14px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;">Request confirmed</p>
       <h1 style="margin:0 0 14px;font-size:28px;line-height:1.25;color:#111827;">We received your request</h1>
@@ -148,6 +169,7 @@ export function leadEmailHtml(lead: Lead) {
   return emailShell({
     title: "Verified consultation request",
     preview: `New verified request from ${lead.name}.`,
+    logoSrc: publicLogoUrl(),
     body: `
       <p style="margin:0 0 10px;color:#2563eb;font-size:14px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;">Verified lead</p>
       <h1 style="margin:0 0 14px;font-size:28px;line-height:1.25;color:#111827;">New consultation request</h1>
@@ -221,7 +243,7 @@ export async function sendLeadEmail(lead: Lead) {
     replyTo: lead.email,
     subject: `Verified Consultation - ${lead.name}`,
     html: leadEmailHtml(lead),
-    attachments: [logoAttachment()],
+    attachments: logoAttachments(),
     text: `
       Name: ${lead.name}
       Email: ${lead.email}

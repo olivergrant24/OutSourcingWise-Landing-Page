@@ -6,7 +6,7 @@ import {
   confirmationEmailHtml,
   createTransporter,
   getTokenHash,
-  logoAttachment,
+  logoAttachments,
   parseVerificationToken,
   sendLeadEmail,
 } from "./contact-utils.js";
@@ -146,7 +146,7 @@ export default async function handler(
       to: lead.email,
       subject: "Your OutSourceWise request is confirmed",
       html: confirmationEmailHtml(lead),
-      attachments: [logoAttachment()],
+      attachments: logoAttachments(),
       text: `
         Hi ${lead.name},
 
