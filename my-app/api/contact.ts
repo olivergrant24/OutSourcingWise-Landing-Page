@@ -94,7 +94,6 @@ export default async function handler(
       company,
       service,
       message,
-      website,
       startedAt,
       turnstileToken,
     } = req.body as {
@@ -103,14 +102,9 @@ export default async function handler(
       company?: string;
       service?: string;
       message?: string;
-      website?: string;
       startedAt?: string;
       turnstileToken?: string;
     };
-
-    if (website && website.trim().length > 0) {
-      return res.status(200).json({ ok: true });
-    }
 
     const clientIp = getClientIp(req);
     const trimmedName = name?.trim() || "";
@@ -120,7 +114,10 @@ export default async function handler(
     const emailDomain = trimmedEmail.split("@")[1] || "";
 
     if (Number.isFinite(submittedAt) && Date.now() - submittedAt < MIN_SUBMIT_TIME_MS) {
-      return res.status(200).json({ ok: true });
+      return res.status(400).json({
+        ok: false,
+        error: "Please wait a moment before submitting",
+      });
     }
 
     if (!(await verifyTurnstile(turnstileToken || "", clientIp))) {

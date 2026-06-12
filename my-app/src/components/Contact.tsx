@@ -129,7 +129,6 @@ export function Contact() {
       company: String(fd.get('company') || ''),
       service: String(fd.get('service') || ''),
       message: String(fd.get('message') || ''),
-      website: String(fd.get('website') || ''),
       startedAt: String(fd.get('startedAt') || ''),
       turnstileToken: verifiedTurnstileToken,
     };
@@ -243,13 +242,6 @@ export function Contact() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
-                  <input
-                    type="text"
-                    name="website"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    className="hidden"
-                  />
                   <input type="hidden" name="startedAt" value={startedAt} />
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
