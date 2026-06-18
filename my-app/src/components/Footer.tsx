@@ -1,7 +1,6 @@
 import { Container } from './ui/Container';
 import { scrollToSection } from '../lib/utils';
 import Facebook from 'lucide-react/dist/esm/icons/facebook.js';
-import Twitter from 'lucide-react/dist/esm/icons/twitter.js';
 import Linkedin from 'lucide-react/dist/esm/icons/linkedin.js';
 import Instagram from 'lucide-react/dist/esm/icons/instagram.js';
 export function Footer() {
@@ -23,6 +22,19 @@ export function Footer() {
   }, {
     name: 'Contact',
     href: '#contact'
+  }];
+  const socialLinks = [{
+    name: 'Facebook',
+    href: 'https://www.facebook.com/profile.php?id=61574292910491',
+    Icon: Facebook
+  }, {
+    name: 'LinkedIn',
+    href: 'https://www.linkedin.com/',
+    Icon: Linkedin
+  }, {
+    name: 'Instagram',
+    href: 'https://www.instagram.com/',
+    Icon: Instagram
   }];
   return <footer className="bg-gray-900 text-gray-300 py-12 border-t border-gray-800">
       <Container>
@@ -51,7 +63,7 @@ export function Footer() {
           <div className="col-span-1">
             <h4 className="text-white font-semibold mb-4">Connect</h4>
             <div className="flex space-x-4">
-              {[Facebook, Twitter, Linkedin, Instagram].map((Icon, i) => <a key={i} href="#" className="text-gray-400 hover:text-white transition-colors">
+              {socialLinks.map(({ name, href, Icon }) => <a key={name} href={href} target="_blank" rel="noopener noreferrer" aria-label={name} className="text-gray-400 hover:text-white transition-colors">
                   <Icon className="h-5 w-5" />
                 </a>)}
             </div>

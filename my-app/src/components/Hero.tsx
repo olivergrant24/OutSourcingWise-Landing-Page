@@ -12,7 +12,7 @@ export function Hero() {
           <div className="text-center lg:text-left">
             <div className="inline-flex items-center rounded-full px-4 py-2 text-sm font-medium text-blue-600 bg-blue-100 mb-8 shadow-sm">
               <span className="flex h-2 w-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
-              Now accepting new clients for Q4
+              Now accepting new clients for Q3 and Q4
             </div>
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 tracking-tight mb-6 leading-[1.1]">

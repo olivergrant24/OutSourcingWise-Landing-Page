@@ -16,9 +16,9 @@ const pricingTiers = [{
 }, {
   name: 'Professional',
   icon: Star,
-  price: 1200,
+  price: 1500,
   description: 'Most popular choice for growing businesses ready to scale',
-  features: ['1-2 Dedicated VAs', '40 hours per week', 'Priority support', 'Advanced task & project management', 'Daily performance reports', '48-hour onboarding', 'Dedicated account manager', 'Quality assurance included'],
+  features: ['1 Dedicated VA', '40 hours per week', 'Priority support', 'Advanced task & project management', 'Daily performance reports', '48-hour onboarding', 'Dedicated account manager', 'Quality assurance included'],
   cta: 'Get Started',
   popular: true
 }, {
@@ -51,7 +51,7 @@ export function Pricing() {
           <p className="text-xl text-gray-300 leading-relaxed">
             No hidden fees. No surprises. Just exceptional virtual assistants
             starting at{' '}
-            <span className="text-blue-400 font-bold">$1,200/month</span>.
+            <span className="text-blue-400 font-bold">$1,500/month</span>.
           </p>
         </div>
 

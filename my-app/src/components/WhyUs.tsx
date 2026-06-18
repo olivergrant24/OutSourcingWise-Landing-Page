@@ -21,7 +21,7 @@ const benefits = [{
 }, {
   icon: Clock,
   title: 'Fast Onboarding',
-  description: 'Get your VA up and running in as little as 48 hours. We have a pool of talent ready to go.'
+  description: 'Get your VA up and running in as little as 1 to 2 weeks. We have a pool of talent ready to go.'
 }, {
   icon: Shield,
   title: 'Data Privacy Mindset',

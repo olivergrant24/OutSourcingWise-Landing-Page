@@ -6,13 +6,13 @@ import Minus from 'lucide-react/dist/esm/icons/minus.js';
 import { cn } from '../lib/utils';
 const faqs = [{
   question: 'How fast can we start?',
-  answer: 'Typically, we can have a fully onboarded VA ready for you within 48 to 72 hours after our initial discovery call. We maintain a pool of pre-vetted talent ready to deploy.'
+  answer: 'Typically, we can have a fully onboarded VA ready for you within 1 to 2 weeks after our initial discovery call. We maintain a pool of pre-vetted talent ready to deploy.'
 }, {
   question: 'What timezones do you support?',
   answer: 'We support all major timezones including EST, PST, GMT, and AEST. Our VAs work shifts that align with your business hours to ensure seamless collaboration.'
 }, {
-  question: 'Are calls recorded and is QA included?',
-  answer: 'Yes, for voice roles (cold calling, support), all calls are recorded for quality assurance. Our internal QA team reviews a percentage of calls weekly and provides coaching to the VAs at no extra cost to you.'
+  question: 'Are calls recorded?',
+  answer: 'It should be with-in the software or dialer that you provide. Call recording must be activated.'
 }, {
   question: 'What tools do you use?',
   answer: 'Our VAs are trained on popular tools like Salesforce, HubSpot, Zendesk, Slack, Asana, and Google Workspace. We can also train them on your proprietary software during the onboarding phase.'
